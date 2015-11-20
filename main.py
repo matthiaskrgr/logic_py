@@ -21,8 +21,13 @@
 import sys
 from sympy import *
 import sympy.abc 
+from sympy.logic.inference import satisfiable
 
 __author__ = 'Matthias "matthiaskrgr" Krüger'
+
+
+
+OPERATORS=['&', '|', '~']
 
 _input=[]
 
@@ -50,6 +55,12 @@ for i in _input:
 	if ((i == "NOT") or (i == "not") or (i == "!" ) or (i == "¬")):
 		tokenized_input.append("~")
 		continue
+
+	# XOR
+	if ((i == "XOR") or (i == "xor") or (i == "^")):
+		tokenized_input.append("^")
+		continue
+
 	tokenized_input.append(i)
 
 print("Tokenized: "+  str(tokenized_input))
@@ -59,7 +70,7 @@ string =' '.join(tokenized_input)
 print("string: " + string)
 
 
-
-
-from sympy.logic.inference import satisfiable
-print(satisfiable(str(string)))
+sym = sympify(str(string), convert_xor=False)
+sat = satisfiable(sym, all_models=True)
+for x in sat: # print all possibilities
+	print(x)
