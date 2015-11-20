@@ -19,6 +19,8 @@
 
 
 import sys
+from sympy import *
+import sympy.abc 
 
 __author__ = 'Matthias "matthiaskrgr" Krüger'
 
@@ -35,20 +37,29 @@ print("Input :" + str(_input))
 
 tokenized_input = []
 
-
 for i in _input:
 	# and
 	if ((i == "AND") or (i == "&&" ) or (i == "and") or (i == "∧")):
-		tokenized_input.append("∧")
+		tokenized_input.append("&")
 		continue
 	# or
 	if ((i == "OR") or (i == "||" ) or (i == "or") or (i == "∨")):
-		tokenized_input.append("∨")
+		tokenized_input.append("|")
 		continue
 	# not
 	if ((i == "NOT") or (i == "not") or (i == "!" ) or (i == "¬")):
-		tokenized_input.append("¬")
+		tokenized_input.append("~")
 		continue
 	tokenized_input.append(i)
 
 print("Tokenized: "+  str(tokenized_input))
+
+string =' '.join(tokenized_input)
+
+print("string: " + string)
+
+
+
+
+from sympy.logic.inference import satisfiable
+print(satisfiable(str(string)))
